@@ -29,13 +29,13 @@ const Hero = () => {
         reloadOnUpdate={true}
         elementType="div"
       >
-        <img className="flickity_image" src={image2} />
-        <img className="flickity_image" src={image3} />
-        <img className="flickity_image" src={image} />
-        <img className="flickity_image" src={image4} />
-        <img className="flickity_image" src={image5} />
-        <img className="flickity_image" src={image} />
-        <img className="flickity_image" src={image3} />
+        <img alt="sliderImage1" className="flickity_image" src={image2} />
+        <img alt="sliderImage2" className="flickity_image" src={image3} />
+        <img alt="sliderImage3" className="flickity_image" src={image} />
+        <img alt="sliderImage4" className="flickity_image" src={image4} />
+        <img alt="sliderImage5" className="flickity_image" src={image5} />
+        <img alt="sliderImage6" className="flickity_image" src={image} />
+        <img alt="sliderImage7" className="flickity_image" src={image3} />
       </Flickity>
     </div>
   );

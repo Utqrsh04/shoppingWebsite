@@ -6,9 +6,9 @@ const Header = () => {
   return (
     <div>
       <header className="header">
-        <marquee className="marquee_text" behavior="slide" direction="">
-          Get Free Delivery On Orders Above Rs.799
-        </marquee>
+        <div className="marquee_text">
+          <p>Get Free Delivery On Orders Above Rs.799</p>
+        </div>
 
         <div className="header_wrapper">
           <a href="/" className="header_logo">
