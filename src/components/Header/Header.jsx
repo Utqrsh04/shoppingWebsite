@@ -6,21 +6,21 @@ const Header = () => {
   return (
     <div>
       <header className="header">
-        <marquee className="marquee_text" behavior="" direction="">
+        <marquee className="marquee_text" behavior="slide" direction="">
           Get Free Delivery On Orders Above Rs.799
         </marquee>
 
         <div className="header_wrapper">
-          <div className="header_logo">
+          <a href="/" className="header_logo">
             <img src="" alt="" />
             Logo
-          </div>
+          </a>
 
           <div className="header_links_wrapper">
             <ul className="header_links">
               <li className="link">Home</li>
               <li className="link">About Us</li>
-              <li className="link">Contact Us</li>
+              <li className="link">Contact</li>
               <li className="link">Category</li>
               <li className="link">Products</li>
             </ul>
