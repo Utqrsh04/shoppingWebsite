@@ -12,9 +12,9 @@ const Contact = () => {
 
   return (
     <div>
-      <div class="contact container">
-        <div class="form">
-          <div class="form-txt">
+      <div className="contact container">
+        <div className="form">
+          <div className="form-txt">
             <h1>Contact Us</h1>
             <span>
               As you might expect of a company that began as a high-end

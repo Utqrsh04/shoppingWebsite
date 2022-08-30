@@ -5,10 +5,10 @@ import "./SignupForm.scss";
 const SignupForm = () => {
   return (
     <div>
-      <div class="signup_container" onclick="onclick">
-        <div class="top"></div>
-        <div class="bottom"></div>
-        <div class="center">
+      <div className="signup_container">
+        <div className="top"></div>
+        <div className="bottom"></div>
+        <div className="center">
           <form>
             <h2>Please Register to Continue</h2>
             <input type="email" placeholder="email" required />
