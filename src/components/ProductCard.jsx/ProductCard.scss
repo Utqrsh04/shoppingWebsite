@@ -8,10 +8,17 @@
     min-height: 300px;
     height: fit-content;
     // background-color: gray;
+    overflow: hidden;
 
-    img {
+    .product_image {
       width: 100%;
       height: 100%;
+    }
+
+    .product_image:hover {
+      // border: 10px solid gold;
+      transition-duration: 0.4s;
+      transform: scale(1.05);
     }
   }
 

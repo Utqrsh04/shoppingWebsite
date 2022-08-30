@@ -49,6 +49,11 @@
     .header_links {
       display: flex;
       justify-content: space-evenly;
+
+      .link-tg {
+        text-decoration: none;
+        color: black;
+      }
     }
 
     .link {
@@ -59,6 +64,7 @@
       // background-color: coral;
       position: relative;
       cursor: pointer;
+      color: black;
     }
 
     .link:after {
