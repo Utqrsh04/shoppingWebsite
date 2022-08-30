@@ -5,15 +5,15 @@ import "./LoginForm.scss";
 const LoginForm = () => {
   return (
     <div>
-      <div class="login_container" onclick="onclick">
-        <div class="top"></div>
-        <div class="bottom"></div>
-        <div class="center">
+      <div className="login_container">
+        <div className="top"></div>
+        <div className="bottom"></div>
+        <div className="center">
           <form>
             <h2>Please Sign In to Continue</h2>
             <input type="email" placeholder="email" required />
             <input type="password" placeholder="password" required />
-            <button type="submit" class="login_btn custom-btn">
+            <button type="submit" className="login_btn custom-btn">
               Login
             </button>
 

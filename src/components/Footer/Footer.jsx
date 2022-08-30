@@ -1,15 +1,16 @@
 import React from "react";
 import "./Footer.scss";
 import { FaFacebookSquare, FaTwitterSquare, FaInstagram } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <>
-      <footer class="footer_section_wrapper">
-        <div class="footer_section">
+      <footer className="footer_section_wrapper">
+        <div className="footer_section">
           <div>
-            <h6 class="footer-heading">Informations</h6>
-            <ul class="footer-link">
+            <h6 className="footer-heading">Informations</h6>
+            <ul className="footer-link">
               <li>
                 <a href="#!">Contact Us</a>
               </li>
@@ -22,46 +23,46 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h6 class="footer-heading">Help</h6>
-            <ul class="footer-link">
-              <li>
-                <a href="#!">Register</a>
-              </li>
-              <li>
-                <a href="#!">Sign in</a>
-              </li>
+            <h6 className="footer-heading">Help</h6>
+            <ul className="footer-link">
+              <Link classNameName="link-tg" to={"/signup"}>
+                <li classNameName="link">Register</li>
+              </Link>
+              <Link classNameName="link-tg" to={"/login"}>
+                <li classNameName="link">Sign In</li>
+              </Link>
               <li>
                 <a href="#!">Privacy Policy</a>
               </li>
             </ul>
           </div>
-          <div class="footer-link">
-            <h6 class="footer-heading">Contact us</h6>
-            <p class="contact-info">Need help ?</p>
-            <p class="contact-info">+XX XX-XX-XX-XX-XX</p>
+          <div className="footer-link">
+            <h6 className="footer-heading">Contact us</h6>
+            <p className="contact-info">Need help ?</p>
+            <p className="contact-info">+XX XX-XX-XX-XX-XX</p>
             <div>
-              <ul class="list-inline">
-                <li class="list-inline-item">
+              <ul className="list-inline">
+                <li className="list-inline-item">
                   <a href="#!">
-                    <FaFacebookSquare className="facebook footer-social-icon" />
+                    <FaFacebookSquare classNameName="facebook footer-social-icon" />
                   </a>
                 </li>
-                <li class="list-inline-item">
+                <li className="list-inline-item">
                   <a href="#!">
-                    <FaTwitterSquare className="twitter footer-social-icon" />
+                    <FaTwitterSquare classNameName="twitter footer-social-icon" />
                   </a>
                 </li>
-                <li class="list-inline-item">
+                <li className="list-inline-item">
                   <a href="#!">
-                    <FaInstagram className="instagram footer-social-icon" />
+                    <FaInstagram classNameName="instagram footer-social-icon" />
                   </a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="copyright">
-          <p class="footer-alt">2022 © Society, All Rights Reserved</p>
+        <div className="copyright">
+          <p className="footer-alt">2022 © Society, All Rights Reserved</p>
         </div>
       </footer>
     </>
