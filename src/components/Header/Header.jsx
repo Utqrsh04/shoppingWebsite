@@ -1,6 +1,7 @@
 import React from "react";
 import "./Header.scss";
 import { FaUserAlt, FaSearch, FaShoppingCart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -18,11 +19,17 @@ const Header = () => {
 
           <div className="header_links_wrapper">
             <ul className="header_links">
-              <li className="link">Home</li>
-              <li className="link">About Us</li>
-              <li className="link">Contact</li>
-              <li className="link">Category</li>
-              <li className="link">Products</li>
+              <Link className="link-tg" to={"/"}>
+                <li className="link">Home</li>
+              </Link>
+              {/* <li className="link">About Us</li> */}
+              <Link className="link-tg" to={"/contact"}>
+                <li className="link">Contact</li>
+              </Link>
+              {/* <li className="link">Category</li> */}
+              <Link className="link-tg" to={"/products"}>
+                <li className="link">Products</li>
+              </Link>
             </ul>
           </div>
 

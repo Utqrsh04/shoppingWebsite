@@ -1,7 +1,6 @@
 import React from "react";
-import ProductCard from "../ProductCard.jsx/ProductCard";
-import "./NewArrivals.scss";
-
+import ProductCard from "../../components/ProductCard.jsx/ProductCard";
+import "./ProductsPage.scss";
 
 const imageSrc = [
   "https://media.everlane.com/image/upload/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/efc7f6e8_b08d",
@@ -12,12 +11,11 @@ const imageSrc = [
   "https://media.everlane.com/image/upload/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/89e04b75_14de",
 ];
 
-const NewArrivals = () => {
+const ProductPage = () => {
   return (
-    <div className="below_hero_section">
-      <h2 className="below_hero_section_heading"> New Arrivals </h2>
-
-      <div className="product_card_wrapper_container">
+    <div>
+      ProductPage
+      <div className="products_wrapper_container">
         {imageSrc.map((e) => (
           <ProductCard img={e} />
         ))}
@@ -26,4 +24,4 @@ const NewArrivals = () => {
   );
 };
 
-export default NewArrivals;
+export default ProductPage;

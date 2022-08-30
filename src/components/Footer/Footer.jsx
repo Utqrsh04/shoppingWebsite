@@ -11,7 +11,7 @@ const Footer = () => {
             <h6 class="footer-heading">Informations</h6>
             <ul class="footer-link">
               <li>
-                <a href="#!">Help Center</a>
+                <a href="#!">Contact Us</a>
               </li>
               <li>
                 <a href="#!">Return Policy</a>
