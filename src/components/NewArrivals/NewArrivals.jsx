@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import CardSkeleton from "../Card Skeleton/CardSkeleton";
 import ProductCard from "../ProductCard.jsx/ProductCard";
 import "./NewArrivals.scss";
 
@@ -31,7 +32,7 @@ const NewArrivals = () => {
       <h2 className="below_hero_section_heading"> New Arrivals </h2>
 
       <div className="product_card_wrapper_container">
-        {data &&
+        {data ? (
           data.map((e) => (
             <ProductCard
               key={e._id}
@@ -39,7 +40,10 @@ const NewArrivals = () => {
               img={e.cover_image}
               price={e.price}
             />
-          ))}
+          ))
+        ) : (
+          <CardSkeleton number={5} />
+        )}
       </div>
     </div>
   );
