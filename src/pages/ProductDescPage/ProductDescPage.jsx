@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CardSkeleton from "../../components/Card Skeleton/CardSkeleton";
 import "./ProductDescPage.scss";
 const ProductDescPage = () => {
   const [productData, setProductData] = useState();
