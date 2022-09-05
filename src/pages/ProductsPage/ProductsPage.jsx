@@ -23,6 +23,7 @@ const ProductPage = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+  console.log(data);
 
   return (
     <div>
@@ -35,6 +36,7 @@ const ProductPage = () => {
               product_name={e.product_name}
               img={e.cover_image}
               price={e.price}
+              product_id={e.product_id}
             />
           ))}
       </div>

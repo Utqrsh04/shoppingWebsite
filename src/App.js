@@ -9,12 +9,13 @@ import ProductsPage from "./pages/ProductsPage/ProductsPage";
 import ProductDescPage from "./pages/ProductDescPage/ProductDescPage";
 import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/SignupForm/SignupForm";
+import RazorPay from "./components/RazorPay/RazorPay";
 
 function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -29,6 +30,7 @@ function App() {
           <>
             <Header />
             <Routes>
+              <Route path="/test" element={<RazorPay />}></Route>
               <Route path="/signup" element={<SignupForm />}></Route>
               <Route path="/login" element={<LoginForm />}></Route>
               <Route path="/" element={<LandingPage />}></Route>
@@ -36,7 +38,7 @@ function App() {
               <Route path="/products" element={<ProductsPage />}></Route>
 
               <Route
-                path="product/:productId"
+                path="products/:productId"
                 element={<ProductDescPage />}
               ></Route>
             </Routes>
