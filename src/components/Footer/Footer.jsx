@@ -25,11 +25,11 @@ const Footer = () => {
           <div>
             <h6 className="footer-heading">Help</h6>
             <ul className="footer-link">
-              <Link classNameName="link-tg" to={"/signup"}>
-                <li classNameName="link">Register</li>
+              <Link className="link-tg" to={"/signup"}>
+                <li className="link">Register</li>
               </Link>
-              <Link classNameName="link-tg" to={"/login"}>
-                <li classNameName="link">Sign In</li>
+              <Link className="link-tg" to={"/login"}>
+                <li className="link">Sign In</li>
               </Link>
               <li>
                 <a href="#!">Privacy Policy</a>
@@ -44,17 +44,17 @@ const Footer = () => {
               <ul className="list-inline">
                 <li className="list-inline-item">
                   <a href="#!">
-                    <FaFacebookSquare classNameName="facebook footer-social-icon" />
+                    <FaFacebookSquare className="facebook footer-social-icon" />
                   </a>
                 </li>
                 <li className="list-inline-item">
                   <a href="#!">
-                    <FaTwitterSquare classNameName="twitter footer-social-icon" />
+                    <FaTwitterSquare className="twitter footer-social-icon" />
                   </a>
                 </li>
                 <li className="list-inline-item">
                   <a href="#!">
-                    <FaInstagram classNameName="instagram footer-social-icon" />
+                    <FaInstagram className="instagram footer-social-icon" />
                   </a>
                 </li>
               </ul>
