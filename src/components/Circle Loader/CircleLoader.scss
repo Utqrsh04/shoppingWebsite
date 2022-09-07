@@ -1,0 +1,141 @@
+@property --loader_l0 {
+  syntax: "<percentage>";
+  initial-value: 0%;
+  inherits: false;
+}
+@property --loader_l1 {
+  syntax: "<percentage>";
+  initial-value: 0%;
+  inherits: false;
+}
+
+.product_desc_loader {
+  /*Since it's gonna be circle, width and height are the same.*/
+  --width: 64px;
+  position: absolute;
+  left: calc(50% - calc(var(--width) / 2));
+  top: calc(50% - calc(var(--width) / 2));
+  perspective: 1000px;
+}
+.loader-done {
+  position: absolute;
+  display: none;
+  border-top: 3px solid #7051c3;
+  border-left: 3px solid #7051c3;
+  border-top-left-radius: 3px;
+  width: calc(var(--width) / 6);
+  height: calc(var(--width) / 3);
+  top: calc(var(--width) / 2 - 15px);
+  left: calc(var(--width) / 2 - 7px);
+  transform: rotateZ(220deg);
+  animation: loaderFadeIn 0.6s;
+}
+.circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--width);
+  height: var(--width);
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.circle::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: 3px;
+  border-radius: 100%;
+  background: linear-gradient(
+    45deg,
+    #a947f4 0%,
+    #f24479 var(--loader_l0),
+    #a947f4 var(--loader_l1),
+    #f24479 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.circle.c1 {
+  animation: rx 2s infinite, gradientMove 1s infinite;
+}
+.circle.c2 {
+  animation: ry 1s infinite, gradientMove 0.5s infinite;
+}
+.circle.c3 {
+  animation: rz 1.5s infinite, gradientMove 0.75s infinite;
+}
+
+.product_desc_loader.done .circle.c1,
+.product_desc_loader.done .circle.c2,
+.product_desc_loader.done .circle.c3 {
+  animation: rfinal 0.5s;
+}
+
+.product_desc_loader.done .loader-done {
+  display: block;
+}
+
+@keyframes rx {
+  from {
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: rotateZ(360deg) rotateX(180deg);
+  }
+}
+
+@keyframes ry {
+  from {
+  }
+  60% {
+    filter: blur(1px);
+    opacity: 0.4;
+  }
+  100% {
+    transform: rotateZ(180deg) rotateY(180deg);
+  }
+}
+
+@keyframes rz {
+  from {
+  }
+  40% {
+    filter: blur(1px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotateZ(180deg) rotateY(-180deg);
+  }
+}
+
+@keyframes loaderFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    --button_b: 0%;
+    --button_b_out: 0%;
+  }
+  33% {
+    --button_b: 100%;
+    --button_b_out: 0%;
+  }
+  99% {
+    --button_b: 100%;
+    --button_b_out: 100%;
+  }
+  100% {
+    --button_b: 0%;
+    --button_b_out: 0%;
+  }
+}

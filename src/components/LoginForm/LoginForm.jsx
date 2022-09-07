@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./LoginForm.scss";
 
@@ -17,8 +17,11 @@ const LoginForm = () => {
         email,
         password,
       })
-      .then((res) => setUser(res.data))
-      .catch((res) => setError(res.response?.data?.message));
+      .then((res) => setUser(res.data), setError(undefined))
+      .catch(
+        (res) => setError(res.response?.data?.message),
+        setUser(undefined)
+      );
 
     localStorage.setItem("loginUser", user);
   }
@@ -32,6 +35,15 @@ const LoginForm = () => {
     loginUser();
   };
 
+  useEffect(() => {
+    setUser(localStorage.getItem("loginUser"));
+  }, []);
+
+  if (user) {
+    console.log("we have logged in user ");
+    window.location.href = "/";
+  }
+
   return (
     <div>
       <div className="login_container">
@@ -39,6 +51,7 @@ const LoginForm = () => {
         <div className="bottom"></div>
         <div className="center">
           <form onSubmit={submitHandler}>
+            {error && <h3> {error} </h3>}
             <h2>Please Sign In to Continue</h2>
             <input
               type="email"

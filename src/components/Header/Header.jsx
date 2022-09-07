@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Header.scss";
-import { FaUserAlt, FaSearch, FaShoppingCart } from "react-icons/fa";
+import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const [isOpen, setIsopen] = useState(false);
+
+  const ToggleSidebar = () => {
+    isOpen === true ? setIsopen(false) : setIsopen(true);
+  };
+
   return (
     <div>
       <header className="header">
@@ -35,13 +41,13 @@ const Header = () => {
 
           <div className="header_icons_wrapper">
             <div>
-              <span className="header_icons">
+              {/* <span className="header_icons">
                 <FaSearch />
-              </span>
-              <span className="header_icons">
+              </span> */}
+              <Link to={"/profile"} className="header_icons">
                 <FaUserAlt />
-              </span>
-              <span className="header_icons">
+              </Link>
+              <span className="header_icons" onClick={ToggleSidebar}>
                 <FaShoppingCart />
               </span>
             </div>
@@ -64,6 +70,68 @@ const Header = () => {
           </ul>
         </div>
       </header>
+      <div>
+        <div className={`sidebar ${isOpen === true ? "active" : ""}`}>
+          <div className="sd-header">
+            <h2 className="mb-0">Cart</h2>
+            <div className="btn btn-primary" onClick={ToggleSidebar}>
+              <i className="fa fa-times">Close</i>
+            </div>
+          </div>
+          <div className="sd-body">
+            <ul>
+              <li>
+                <a href="!#" className="sd-link">
+                  Order Item 1
+                </a>
+              </li>
+              <li>
+                <a href="!#" className="sd-link">
+                  Order Item 2
+                </a>
+              </li>
+              <li>
+                <a href="!#" className="sd-link">
+                  Order Item 3
+                </a>
+              </li>
+              <li>
+                <a href="!#" className="sd-link">
+                  Order Item 4
+                </a>
+              </li>
+              <li>
+                <a href="!#" className="sd-link">
+                  Order Item 5
+                </a>
+              </li>
+              <li>
+                <a href="!#" className="sd-link">
+                  Order Item 6
+                </a>
+              </li>
+              <li>
+                <a href="!#" className="sd-link">
+                  Order Item 7
+                </a>
+              </li>
+              <li>
+                <a href="!#" className="sd-link">
+                  Order Item 8
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <Link to={"/checkout"} className="checkout-btn">
+            Proceed to Checkout
+          </Link>
+        </div>
+        <div
+          className={`sidebar-overlay ${isOpen === true ? "active" : ""}`}
+          onClick={ToggleSidebar}
+        ></div>
+      </div>
     </div>
   );
 };
