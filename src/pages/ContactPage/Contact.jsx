@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../../components/Footer/Footer";
 import "./Contact.scss";
 
 const Contact = () => {
@@ -34,6 +35,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

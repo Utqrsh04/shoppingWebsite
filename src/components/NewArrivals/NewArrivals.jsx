@@ -1,50 +1,35 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import CardSkeleton from "../Card Skeleton/CardSkeleton";
+import { useContext } from "react";
+import { AppContext } from "../../App";
+import CircleLoader from "../Circle Loader/CircleLoader";
 import ProductCard from "../ProductCard.jsx/ProductCard";
 import "./NewArrivals.scss";
 
-// const imageSrc = [
-//   "https://media.everlane.com/image/upload/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/efc7f6e8_b08d",
-//   "https://media.everlane.com/image/upload/c_fill,w_1080,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/305d6c38_ba4e",
-//   "https://media.everlane.com/image/upload/c_fill,w_1080,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/fa306354_a4ba",
-//   "https://media.everlane.com/image/upload/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/633d0ccf_7bf0",
-//   "https://media.everlane.com/image/upload/c_fill,w_1080,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/85bfb37e_88af",
-//   "https://media.everlane.com/image/upload/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/89e04b75_14de",
-// ];
-
 const NewArrivals = () => {
-  const [data, setData] = useState([]);
-  const fetchProducts = () => {
-    axios
-      .get("https://ecommerce04.herokuapp.com/api/product/newArrival", {
-        mode: "cors",
-      })
-      .then((res) => setData(res.data));
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const contextData = useContext(AppContext);
+  console.log("context data ", contextData);
 
   return (
     <div className="below_hero_section">
       <h2 className="below_hero_section_heading"> New Arrivals </h2>
 
       <div className="product_card_wrapper_container">
-        {data ? (
-          data.map((e) => (
-            <ProductCard
-              key={e._id}
-              product_name={e.product_name}
-              img={e.cover_image}
-              price={e.price}
-              product_id={e.product_id}
-            />
-          ))
-        ) : (
-          <CardSkeleton number={5} />
-        )}
+        <AppContext.Consumer>
+          {(data) =>
+            data.newArrivals && data.newArrivals ? (
+              data.newArrivals.map((e) => (
+                <ProductCard
+                  key={e._id}
+                  product_name={e.product_name}
+                  img={e.cover_image}
+                  price={e.price}
+                  product_id={e.product_id}
+                />
+              ))
+            ) : (
+              <CircleLoader />
+            )
+          }
+        </AppContext.Consumer>
       </div>
     </div>
   );

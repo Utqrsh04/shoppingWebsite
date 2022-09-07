@@ -38,9 +38,9 @@ const Header = () => {
               <span className="header_icons">
                 <FaSearch />
               </span>
-              <span className="header_icons">
+              <Link to={"/profile"} className="header_icons">
                 <FaUserAlt />
-              </span>
+              </Link>
               <span className="header_icons">
                 <FaShoppingCart />
               </span>
