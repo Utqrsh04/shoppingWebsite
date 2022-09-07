@@ -17,17 +17,16 @@ const LoginForm = () => {
         email,
         password,
       })
-      .then((res) => setUser(res.data), setError(undefined))
+      .then(
+        (res) => setUser(res.data),
+        setError(undefined),
+        localStorage.setItem("loginUser", user)
+      )
       .catch(
         (res) => setError(res.response?.data?.message),
         setUser(undefined)
       );
-
-    localStorage.setItem("loginUser", user);
   }
-
-  console.log(user);
-  console.log(error);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -40,7 +39,7 @@ const LoginForm = () => {
   }, []);
 
   if (user) {
-    console.log("we have logged in user ");
+    alert("we have logged in user ");
     window.location.href = "/";
   }
 

@@ -73,7 +73,19 @@
 
 .user-orders-wrapper {
   margin: 50px;
-  border: 1px solid blue;
   min-height: 200px;
   width: 100%;
+}
+
+.profile-page-login-link {
+  min-height: 400px;
+  border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login-link {
+    font-size: 20px;
+    text-decoration: none;
+  }
 }

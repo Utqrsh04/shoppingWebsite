@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.scss";
 import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsopen] = useState(false);
-
+  const [user, setUser] = useState();
   const ToggleSidebar = () => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
   };
+
+  useEffect(() => {
+    setUser(localStorage.getItem("loginUser"));
+  }, []);
 
   return (
     <div>
@@ -44,7 +48,7 @@ const Header = () => {
               {/* <span className="header_icons">
                 <FaSearch />
               </span> */}
-              <Link to={"/profile"} className="header_icons">
+              <Link to={user ? "/profile" : "/login"} className="header_icons">
                 <FaUserAlt />
               </Link>
               <span className="header_icons" onClick={ToggleSidebar}>
@@ -80,16 +84,6 @@ const Header = () => {
           </div>
           <div className="sd-body">
             <ul>
-              <li>
-                <a href="!#" className="sd-link">
-                  Order Item 1
-                </a>
-              </li>
-              <li>
-                <a href="!#" className="sd-link">
-                  Order Item 2
-                </a>
-              </li>
               <li>
                 <a href="!#" className="sd-link">
                   Order Item 3
