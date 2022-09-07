@@ -12,6 +12,7 @@ import SignupForm from "./components/SignupForm/SignupForm";
 import RazorPay from "./components/RazorPay/RazorPay";
 import Profile from "./pages/ProfilePage/Profile";
 import axios from "axios";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
 export const AppContext = React.createContext();
 export const ProductContext = React.createContext();
@@ -30,7 +31,7 @@ function App() {
 
   useEffect(() => {
     fetchProducts();
-    // setLoading(true);
+    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -58,6 +59,7 @@ function App() {
                 <Route path="/contact" element={<Contact />}></Route>
                 <Route path="/products" element={<ProductsPage />}></Route>
                 <Route path="/profile" element={<Profile />}></Route>
+                <Route path="/checkout" element={<CheckoutPage />}></Route>
 
                 <Route
                   path="products/:productId"

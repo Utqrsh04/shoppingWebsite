@@ -20,7 +20,10 @@ const ProductPage = () => {
 
   return (
     <div>
-      ProductPage
+      <div className="products-search-container">
+        <input type="text" placeholder="Search For Products" value="" />
+        <button className="search-product-btn">Search</button>
+      </div>
       <div className="products_wrapper_container">
         {data ? (
           data.map((e) => (

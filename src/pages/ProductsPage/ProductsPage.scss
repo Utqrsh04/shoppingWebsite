@@ -1,3 +1,38 @@
+.products-search-container {
+  // border: 1px solid red;
+  margin: 30px 10px;
+  display: flex;
+  justify-content: center;
+
+  input {
+    min-width: 300px;
+    padding: 12px 15px;
+    // margin: 5px;
+    border-radius: 1px;
+    font-family: inherit;
+    outline: none;
+    border: 1px solid black;
+  }
+
+  .search-product-btn {
+    outline: none;
+    max-width: 80px;
+    height: 100%;
+    padding: 13px;
+    background: black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .products_wrapper_container {
   display: flex;
   flex-direction: row;
