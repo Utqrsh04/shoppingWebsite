@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import "./LoginForm.scss";
 
@@ -17,15 +18,20 @@ const LoginForm = () => {
         email,
         password,
       })
-      .then(
-        (res) => setUser(res.data),
-        setError(undefined),
-        localStorage.setItem("loginUser", user)
-      )
-      .catch(
-        (res) => setError(res.response?.data?.message),
-        setUser(undefined)
-      );
+      .then((res) => {
+        return (
+          setUser(res.data),
+          setError(undefined),
+          localStorage.setItem("loginUser", JSON.stringify(res.data))
+        );
+      })
+      .catch((res) => {
+        return (
+          setError(res.response?.data?.message),
+          toast.error(res.response?.data?.message),
+          setUser(undefined)
+        );
+      });
   }
 
   const submitHandler = (e) => {
@@ -35,7 +41,7 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    setUser(localStorage.getItem("loginUser"));
+    setUser(JSON.parse(localStorage.getItem("loginUser")));
   }, []);
 
   if (user) {
@@ -45,12 +51,12 @@ const LoginForm = () => {
 
   return (
     <div>
+      <Toaster />
       <div className="login_container">
         <div className="top"></div>
         <div className="bottom"></div>
         <div className="center">
           <form onSubmit={submitHandler}>
-            {error && <h3> {error} </h3>}
             <h2>Please Sign In to Continue</h2>
             <input
               type="email"

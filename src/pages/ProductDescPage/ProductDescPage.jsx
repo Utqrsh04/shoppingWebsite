@@ -1,10 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CircleLoader from "../../components/Circle Loader/CircleLoader";
+import { CartState } from "../../context/context";
 import "./ProductDescPage.scss";
 const ProductDescPage = () => {
   const [productData, setProductData] = useState();
   const [selectedSize, setSelectedSize] = useState();
+
+  const {
+    state: { cart },
+    dispatch,
+  } = CartState();
+
+  console.log("Product Desc Page", cart);
 
   const fetchProduct = () => {
     let productID = window?.location?.pathname.split("/")[2];
@@ -15,7 +23,7 @@ const ProductDescPage = () => {
       .then((res) => setProductData(res.data));
   };
 
-  console.log(productData);
+  // console.log(productData);
 
   useEffect(() => {
     fetchProduct();
@@ -52,9 +60,7 @@ const ProductDescPage = () => {
                 <h1>{productData?.product_name}</h1>
                 <h2>₹{productData?.price}</h2>
               </div>
-
               <div className="product_description">{productData?.desc}</div>
-
               <div className="product_desc_size_container">
                 Size
                 <div className="size_select" tabIndex="1">
@@ -62,7 +68,9 @@ const ProductDescPage = () => {
                     productData?.size_options.map((each) => (
                       <button
                         id={each}
-                        className={selectedSize === each && " selected_size "}
+                        className={
+                          selectedSize === each ? " selected_size " : " "
+                        }
                         onClick={(e) => handleSizeClick(e)}
                         key={each}
                       >
@@ -71,8 +79,31 @@ const ProductDescPage = () => {
                     ))}
                 </div>
               </div>
-
-              <button className="add_to_cart custom-btn">Add to bag</button>
+              {cart.some((p) => p._id === productData._id) ? (
+                <button
+                  className="add_to_cart custom-btn"
+                  onClick={() =>
+                    dispatch({
+                      type: "REMOVE_FROM_CART",
+                      payload: productData,
+                    })
+                  }
+                >
+                  Remove From Bag
+                </button>
+              ) : (
+                <button
+                  className="add_to_cart custom-btn"
+                  onClick={() =>
+                    dispatch({
+                      type: "ADD_TO_CART",
+                      payload: productData,
+                    })
+                  }
+                >
+                  Add to bag
+                </button>
+              )}
             </div>
           </>
         ) : (

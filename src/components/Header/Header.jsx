@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Header.scss";
 import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { CartState } from "../../context/context";
 
 const Header = () => {
   const [isOpen, setIsopen] = useState(false);
@@ -10,9 +12,17 @@ const Header = () => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
   };
 
+  const {
+    state: { cart },
+  } = CartState();
+
   useEffect(() => {
     setUser(localStorage.getItem("loginUser"));
   }, []);
+
+  const incrementCount = () => {};
+
+  const decrementCount = () => {};
 
   return (
     <div>
@@ -53,7 +63,7 @@ const Header = () => {
               </Link>
               <span className="header_icons cart_icon" onClick={ToggleSidebar}>
                 <FaShoppingCart />
-                <span>6</span>
+                <span>{cart && cart.length}</span>
               </span>
             </div>
           </div>
@@ -79,48 +89,45 @@ const Header = () => {
         <div className={`sidebar ${isOpen === true ? "active" : ""}`}>
           <div className="sd-header">
             <h2 className="mb-0">Cart</h2>
-            <div className="btn btn-primary" onClick={ToggleSidebar}>
-              <i className="fa fa-times">Close</i>
+            <div className="btn-close" onClick={ToggleSidebar}>
+              <IoMdClose className="btn-close-icon" />
             </div>
           </div>
           <div className="sd-body">
             <ul>
-              <li>
-                <a href="!#" className="sd-link">
-                  Order Item 3
-                </a>
-              </li>
-              <li>
-                <a href="!#" className="sd-link">
-                  Order Item 4
-                </a>
-              </li>
-              <li>
-                <a href="!#" className="sd-link">
-                  Order Item 5
-                </a>
-              </li>
-              <li>
-                <a href="!#" className="sd-link">
-                  Order Item 6
-                </a>
-              </li>
-              <li>
-                <a href="!#" className="sd-link">
-                  Order Item 7
-                </a>
-              </li>
-              <li>
-                <a href="!#" className="sd-link">
-                  Order Item 8
-                </a>
-              </li>
+              {cart &&
+                cart.map((e) => (
+                  <li key={e._id}>
+                    <div className="sd-link">
+                      <div className="order_tile">
+                        <img src={e.cover_image} alt="" />
+                        <div className="sidebar-product_desc">
+                          <h5>{e.product_name}</h5>
+                          <h6>Rs.{e.price}</h6>
+                        </div>
+                      </div>
+                      <div className="sidebar_count_btns">
+                        <button onClick={decrementCount}> - </button>5
+                        <button onClick={incrementCount}> + </button>
+                      </div>
+                    </div>
+                    {/* <div className="close-icon-div">
+                      <IoMdClose className="close-icon" />
+                    </div> */}
+                  </li>
+                ))}
             </ul>
           </div>
 
-          <Link to={"/checkout"} className="checkout-btn">
-            Proceed to Checkout
-          </Link>
+          <div className="sd-text">
+            {cart && cart.length > 0 ? (
+              <Link to={"/checkout"} className="checkout-btn">
+                Proceed to Checkout
+              </Link>
+            ) : (
+              <h2>No Items in Cart</h2>
+            )}
+          </div>
         </div>
         <div
           className={`sidebar-overlay ${isOpen === true ? "active" : ""}`}

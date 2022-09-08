@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ProductCard from "../../components/ProductCard.jsx/ProductCard";
 import "./ProductsPage.scss";
 import axios from "axios";
 import CircleLoader from "../../components/Circle Loader/CircleLoader";
 import Footer from "../../components/Footer/Footer";
+import { CartState } from "../../context/context";
 
 const ProductPage = () => {
-  const [data, setData] = useState();
+  const {
+    state: { products },
+    dispatch,
+  } = CartState();
   const fetchProducts = () => {
     axios
       .get("https://ecommerce04.herokuapp.com/api/product", { mode: "cors" })
-      .then((res) => setData(res.data));
+      .then((res) =>
+        dispatch({
+          type: "FETCHED_PRODUCTS",
+          payload: res.data,
+        })
+      );
   };
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(data);
 
   return (
     <div>
@@ -25,8 +34,8 @@ const ProductPage = () => {
         <button className="search-product-btn">Search</button>
       </div>
       <div className="products_wrapper_container">
-        {data ? (
-          data.map((e) => (
+        {products ? (
+          products.map((e) => (
             <ProductCard
               key={e._id}
               product_name={e.product_name}

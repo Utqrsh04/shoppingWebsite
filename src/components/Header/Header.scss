@@ -175,20 +175,20 @@
 .text-primary {
   color: #5a8dee !important;
 }
-.btn-primary {
-  border-color: #5a8dee !important;
-  background-color: #5a8dee !important;
-  color: #fff;
+.btn-close {
+  // border: 1px solid red !important;
+  width: 25px;
+  height: 25px;
+
+  .btn-close-icon {
+    height: 100%;
+    width: 100%;
+  }
 }
-.shadow-md {
-  box-shadow: 0px 5px 10px rgba(90, 116, 148, 0.3);
-}
-.navbar {
-  border-radius: 5px;
-}
+
 .sidebar {
   width: 350px;
-  min-height: 100vh;
+  min-height: 100%;
   box-shadow: 0px 4px 8px rgb(0 0 0 / 16%);
   background-color: #fff;
   position: fixed;
@@ -199,12 +199,23 @@
 }
 .sidebar.active {
   right: 0;
+  padding-bottom: 20px;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .sd-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 15px;
+}
+
+.sd-text {
+  // border: 1px solid red;
+  padding-bottom: 10px;
 }
 .sidebar-overlay {
   position: fixed;
@@ -236,6 +247,7 @@
 .sd-body ul li {
   list-style: none;
   margin-bottom: 8px;
+  display: flex;
 }
 .sd-body ul li .sd-link {
   display: inline-block;
@@ -246,6 +258,68 @@
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+
+  // .close-icon-div {
+  //   position: relative;
+  //   top: 0px;
+  //   left: 100px;
+  // }
+
+  .order_tile {
+    display: flex;
+    min-width: 180px;
+    margin-right: 5px;
+  }
+
+  .sidebar-product_desc {
+    // border: 1px solid red;
+    text-align: left;
+  }
+
+  img {
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .sidebar_count_btns {
+    // border: 1px solid blue;
+    // min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 12px;
+
+    .trash-icon-div {
+      margin-left: 4px;
+      margin-right: 4px;
+      width: 15px;
+      height: 15px;
+
+      .trash-icon {
+        width: 100%;
+        height: 100%;
+        color: rgb(30, 27, 27);
+      }
+    }
+    button {
+      padding: 5px 13px;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 5px 8px;
+      border: none;
+      background-color: #e5e8ec;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      border-radius: 5px;
+      background-color: rgb(255, 255, 255);
+    }
+  }
 }
 
 .checkout-btn {
