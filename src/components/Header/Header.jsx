@@ -51,8 +51,9 @@ const Header = () => {
               <Link to={user ? "/profile" : "/login"} className="header_icons">
                 <FaUserAlt />
               </Link>
-              <span className="header_icons" onClick={ToggleSidebar}>
+              <span className="header_icons cart_icon" onClick={ToggleSidebar}>
                 <FaShoppingCart />
+                <span>6</span>
               </span>
             </div>
           </div>
