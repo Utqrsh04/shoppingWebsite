@@ -1,0 +1,103 @@
+.checkout-page-wrapper {
+  // border: 2px solid red;
+  min-height: 400px;
+  padding: 10px 200px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+
+  .shipping-info-wrapper {
+    // border: 1px solid blue;
+    width: 100%;
+    min-height: 300px;
+    margin-right: 10px;
+
+    .make-payment-btn {
+      margin: 20px;
+      outline: none;
+      width: 200px;
+      height: 40px;
+      padding: 10px 25px;
+      border: 2px solid #000;
+      font-family: "Lato", sans-serif;
+      font-weight: 500;
+      background: black;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+      color: aliceblue;
+    }
+
+    .checkout-email-wrapper {
+      min-height: 200px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      // align-items: center;
+    }
+
+    .checkout-input-feilds-container {
+      margin-top: 20px;
+      width: 100%;
+      text-align: left;
+      // border: 1px solid red;
+
+      h3 {
+        margin: 5px 10px;
+      }
+
+      input {
+        width: 97%;
+        padding: 15px;
+        margin: 5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        font-family: inherit;
+      }
+    }
+  }
+
+  .cart-wrapper {
+    // border: 1px solid chocolate;
+    margin-top: 40px;
+    width: 100%;
+    min-height: 300px;
+    max-width: 500px;
+    padding: 18px 20px;
+    // background-color: whitesmoke;
+
+    .cart-product {
+      padding: 2px 20px;
+      border: 1px solid black;
+      width: 100%;
+      min-height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .info {
+      text-align: left;
+      max-width: 70%;
+    }
+
+    .increment-decrement-btns {
+      width: 20%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      button {
+        padding: 5px 10px;
+        max-height: 30px;
+      }
+    }
+
+    .delete-from-bag {
+      width: 10%;
+    }
+  }
+}
