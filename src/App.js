@@ -9,10 +9,10 @@ import ProductsPage from "./pages/ProductsPage/ProductsPage";
 import ProductDescPage from "./pages/ProductDescPage/ProductDescPage";
 import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/SignupForm/SignupForm";
-import RazorPay from "./components/RazorPay/RazorPay";
 import Profile from "./pages/ProfilePage/Profile";
 import axios from "axios";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+import { CartState } from "./context/context";
 
 export const UserContext = React.createContext();
 export const ProductContext = React.createContext();
@@ -20,28 +20,39 @@ export const ProductContext = React.createContext();
 function App() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
 
-  const fetchProducts = () => {
+  const {
+    state: { newArrivals },
+    dispatch,
+  } = CartState();
+
+  const fetchNewProducts = () => {
     axios
-      .get("https://ecommerce04.herokuapp.com/api/product/newArrival", {
+      .get("https://ecommerce04.herokuapp.com/api/product", {
         mode: "cors",
       })
-      .then((res) => setData(res.data));
+      .then((res) =>
+        dispatch({
+          type: "FETCHED_PRODUCTS",
+          payload: res.data,
+        })
+      );
   };
 
   useEffect(() => {
     setUser(localStorage.getItem("loginUser"));
-    fetchProducts();
+    fetchNewProducts();
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <ProductContext.Provider value={data}>
+      <ProductContext.Provider value={newArrivals}>
         <UserContext.Provider value={user}>
           <BrowserRouter>
             {loading ? (
@@ -50,7 +61,6 @@ function App() {
               <>
                 <Header />
                 <Routes>
-                  <Route path="/test" element={<RazorPay />}></Route>
                   <Route path="/signup" element={<SignupForm />}></Route>
                   <Route path="/login" element={<LoginForm />}></Route>
                   <Route path="/" element={<LandingPage />}></Route>

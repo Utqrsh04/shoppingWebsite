@@ -14,15 +14,37 @@ const Header = () => {
 
   const {
     state: { cart },
+    dispatch,
   } = CartState();
 
   useEffect(() => {
     setUser(localStorage.getItem("loginUser"));
   }, []);
 
-  const incrementCount = () => {};
+  const incrementCount = (id, qty) => {
+    dispatch({
+      type: "CHANGE_CART_QTY",
+      payload: {
+        _id: id,
+        qty: qty + 1,
+      },
+    });
+  };
 
-  const decrementCount = () => {};
+  const decrementCount = (id, qty) => {
+    dispatch({
+      type: "CHANGE_CART_QTY",
+      payload: {
+        _id: id,
+        qty: qty - 1,
+      },
+    });
+  };
+
+  let cartQuantity = 0;
+  for (let i = 0; i < cart.length; i++) {
+    cartQuantity += cart[i].qty;
+  }
 
   return (
     <div>
@@ -63,7 +85,7 @@ const Header = () => {
               </Link>
               <span className="header_icons cart_icon" onClick={ToggleSidebar}>
                 <FaShoppingCart />
-                <span>{cart && cart.length}</span>
+                <span>{cart && cartQuantity}</span>
               </span>
             </div>
           </div>
@@ -102,13 +124,31 @@ const Header = () => {
                       <div className="order_tile">
                         <img src={e.cover_image} alt="" />
                         <div className="sidebar-product_desc">
-                          <h5>{e.product_name}</h5>
+                          <h4>{e.product_name}</h4>
                           <h6>Rs.{e.price}</h6>
                         </div>
                       </div>
                       <div className="sidebar_count_btns">
-                        <button onClick={decrementCount}> - </button>5
-                        <button onClick={incrementCount}> + </button>
+                        <button onClick={() => decrementCount(e._id, e.qty)}>
+                          {" "}
+                          -{" "}
+                        </button>
+                        {e.qty}
+                        <button onClick={() => incrementCount(e._id, e.qty)}>
+                          {" "}
+                          +{" "}
+                        </button>
+                      </div>
+                      <div
+                        className="remove-product-div"
+                        onClick={() =>
+                          dispatch({
+                            type: "REMOVE_FROM_CART",
+                            payload: e,
+                          })
+                        }
+                      >
+                        <IoMdClose className="remove-product-icon" />
                       </div>
                     </div>
                     {/* <div className="close-icon-div">

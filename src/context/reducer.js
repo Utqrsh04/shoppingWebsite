@@ -34,9 +34,13 @@ export const cartReducer = (state, action) => {
     }
 
     case "FETCHED_PRODUCTS": {
+      const newArrivals = action.payload.filter(
+        (product) => product.new_arrivals === true
+      );
       const newState = {
         ...state,
         products: action.payload,
+        newArrivals: newArrivals,
       };
       localStorage.setItem("products", JSON.stringify(action.payload));
       return newState;

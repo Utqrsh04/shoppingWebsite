@@ -10,6 +10,7 @@ const Context = ({ children }) => {
 
   const [state, dispatch] = useReducer(cartReducer, {
     products: products,
+    newArrivals: [],
     cart: cartData ? cartData : [],
   });
 
