@@ -14,16 +14,27 @@ const SignupForm = () => {
 
   const [error, setError] = useState();
 
-  function loginUser() {
+  function signupUser() {
     axios
       .post("https://ecommerce04.herokuapp.com/api/users/signup", {
         email,
         password,
       })
-      .then((res) => setUser(res.data))
-      .catch((res) => setError(res.response?.data?.message));
+      .then((res) => {
+        return (
+          setUser(res.data),
+          setError(undefined),
+          localStorage.setItem("loginUser", JSON.stringify(res.data))
+        );
+      })
+      .catch((res) => {
+        return (
+          setError(res.response?.data?.message),
+          toast.error(res.response?.data?.message)
+        );
+      });
 
-    localStorage.setItem("loginUser", user);
+    localStorage.setItem("loginUser", JSON.stringify(user));
   }
 
   console.log(user);
@@ -34,10 +45,11 @@ const SignupForm = () => {
     if (confirmPassword !== password) {
       console.log("Passwords do not match");
       toast.error("Passwords do not match");
+      setError("Passwords do not match");
+      return;
     }
-
     console.log(email + "  " + password);
-    loginUser();
+    signupUser();
   };
   return (
     <div>

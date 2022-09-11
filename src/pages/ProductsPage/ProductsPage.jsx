@@ -2,35 +2,57 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard.jsx/ProductCard";
 import "./ProductsPage.scss";
 import axios from "axios";
-
-// const imageSrc = [
-//   "https://media.everlane.com/image/upload/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/efc7f6e8_b08d",
-//   "https://media.everlane.com/image/upload/c_fill,w_1080,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/305d6c38_ba4e",
-//   "https://media.everlane.com/image/upload/c_fill,w_1080,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/fa306354_a4ba",
-//   "https://media.everlane.com/image/upload/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/633d0ccf_7bf0",
-//   "https://media.everlane.com/image/upload/c_fill,w_1080,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/85bfb37e_88af",
-//   "https://media.everlane.com/image/upload/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,g_face:center,f_auto,fl_progressive:steep/i/89e04b75_14de",
-// ];
+import CircleLoader from "../../components/Circle Loader/CircleLoader";
+import Footer from "../../components/Footer/Footer";
+import { CartState } from "../../context/context";
 
 const ProductPage = () => {
-  const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const {
+    state: { products },
+    dispatch,
+  } = CartState();
   const fetchProducts = () => {
     axios
       .get("https://ecommerce04.herokuapp.com/api/product", { mode: "cors" })
-      .then((res) => setData(res.data));
+      .then((res) =>
+        dispatch({
+          type: "FETCHED_PRODUCTS",
+          payload: res.data,
+        })
+      );
   };
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(data);
+
+  const filteredData =
+    products &&
+    products.length > 0 &&
+    products.filter((product) =>
+      product?.product_name?.toLowerCase().includes(search?.toLowerCase())
+    );
+
+  console.log(products, filteredData);
 
   return (
     <div>
-      ProductPage
+      <div className="products-search-container">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search For Products"
+        />
+        <button className="search-product-btn">Search</button>
+      </div>
+      {filteredData && filteredData.length === 0 && <h3>No Product Found</h3>}
       <div className="products_wrapper_container">
-        {data &&
-          data.map((e) => (
+        {filteredData ? (
+          filteredData.map((e) => (
             <ProductCard
               key={e._id}
               product_name={e.product_name}
@@ -38,8 +60,12 @@ const ProductPage = () => {
               price={e.price}
               product_id={e.product_id}
             />
-          ))}
+          ))
+        ) : (
+          <CircleLoader />
+        )}
       </div>
+      <Footer />
     </div>
   );
 };
