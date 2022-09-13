@@ -4,6 +4,7 @@ import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { CartState } from "../../context/context";
+import toast, { Toaster } from "react-hot-toast";
 
 const Header = () => {
   const [isOpen, setIsopen] = useState(false);
@@ -46,8 +47,15 @@ const Header = () => {
     cartQuantity += cart[i].qty;
   }
 
+  const logout = () => {
+    localStorage.removeItem("loginUser");
+    setUser(undefined);
+    toast.success("Logout Successfull");
+  };
+
   return (
     <div>
+      <Toaster />
       <header className="header">
         <div className="marquee_text">
           <p>Get Free Delivery On Orders Above Rs.799</p>
@@ -87,6 +95,12 @@ const Header = () => {
                 <FaShoppingCart />
                 <span>{cart && cartQuantity}</span>
               </span>
+
+              {user && (
+                <span onClick={logout} className="logout-btn">
+                  Logout
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -129,13 +143,14 @@ const Header = () => {
                         </div>
                       </div>
                       <div className="sidebar_count_btns">
-                        <button onClick={() => decrementCount(e._id, e.qty)}>
-                          {" "}
+                        <button
+                          disabled={e.qty === 1}
+                          onClick={() => decrementCount(e._id, e.qty)}
+                        >
                           -{" "}
                         </button>
                         {e.qty}
                         <button onClick={() => incrementCount(e._id, e.qty)}>
-                          {" "}
                           +{" "}
                         </button>
                       </div>

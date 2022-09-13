@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LoginForm.scss";
 
 const LoginForm = () => {
@@ -33,6 +33,7 @@ const LoginForm = () => {
         );
       });
   }
+  const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -45,8 +46,8 @@ const LoginForm = () => {
   }, []);
 
   if (user) {
-    alert("we have logged in user ");
-    window.location.href = "/";
+    console.log("we have logged in user ");
+    navigate("/");
   }
 
   return (

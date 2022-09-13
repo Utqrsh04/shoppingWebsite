@@ -14,14 +14,12 @@ const ProductPage = () => {
     dispatch,
   } = CartState();
   const fetchProducts = () => {
-    axios
-      .get("https://ecommerce04.herokuapp.com/api/product", { mode: "cors" })
-      .then((res) =>
-        dispatch({
-          type: "FETCHED_PRODUCTS",
-          payload: res.data,
-        })
-      );
+    axios.get("https://ecommerce04.herokuapp.com/api/product").then((res) =>
+      dispatch({
+        type: "FETCHED_PRODUCTS",
+        payload: res.data,
+      })
+    );
   };
 
   useEffect(() => {

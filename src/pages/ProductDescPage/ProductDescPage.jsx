@@ -16,14 +16,13 @@ const ProductDescPage = () => {
 
   const fetchProduct = () => {
     let productID = window?.location?.pathname.split("/")[2];
+    console.log("calling fetch each ", productID);
     axios
-      .get(`https://ecommerce04.herokuapp.com/api/product/${productID}`, {
-        mode: "cors",
-      })
+      .get(`https://ecommerce04.herokuapp.com/api/product/${productID}`)
       .then((res) => setProductData(res.data));
   };
 
-  // console.log(productData);
+  // console.log(productData);A
 
   useEffect(() => {
     fetchProduct();
