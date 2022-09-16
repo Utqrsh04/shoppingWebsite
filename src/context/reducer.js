@@ -42,7 +42,7 @@ export const cartReducer = (state, action) => {
         products: action.payload,
         newArrivals: newArrivals,
       };
-      localStorage.setItem("products", JSON.stringify(action.payload));
+      // localStorage.setItem("products", JSON.stringify(action.payload));
       return newState;
     }
     default:

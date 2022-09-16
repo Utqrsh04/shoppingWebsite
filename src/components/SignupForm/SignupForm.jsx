@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 import "./SignupForm.scss";
@@ -10,11 +10,8 @@ const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [user, setUser] = useState();
-
-  const [error, setError] = useState();
-
   function signupUser() {
+    const t = toast.loading("Registering...");
     axios
       .post("https://ecommerce04.herokuapp.com/api/users/signup", {
         name,
@@ -23,40 +20,25 @@ const SignupForm = () => {
       })
       .then((res) => {
         return (
-          setUser(res.data),
-          setError(undefined),
-          localStorage.setItem("loginUser", JSON.stringify(res.data))
+          toast.dismiss(t.id),
+          toast.success(
+            "Registration Successfull , Please Verify your email to continue",
+            {
+              duration: 4000,
+              position: "top-center",
+            }
+          )
         );
       })
       .catch((res) => {
-        return (
-          setError(res.response?.data?.message),
-          toast.error(res.response?.data?.message)
-        );
+        return toast.dismiss(t.id), toast.error(res.response?.data?.message);
       });
-
-    localStorage.setItem("loginUser", JSON.stringify(user));
   }
-
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("loginUser")));
-  }, []);
-
-  const navigate = useNavigate();
-
-  if (user) {
-    console.log("we have logged in user ");
-    navigate("/");
-  }
-
-  console.log(user);
-  console.log(error);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (!name || !email || !password) {
       toast.error("Please provide required feilds ");
-      setError("Please provide required feilds");
       return;
     }
     console.log(email + "  " + password);

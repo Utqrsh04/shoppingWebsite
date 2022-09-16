@@ -10,9 +10,8 @@ const LoginForm = () => {
 
   const [user, setUser] = useState();
 
-  const [error, setError] = useState();
-
   function loginUser() {
+    const t = toast.loading("Logging you in...");
     axios
       .post("https://ecommerce04.herokuapp.com/api/users/login", {
         email,
@@ -21,13 +20,13 @@ const LoginForm = () => {
       .then((res) => {
         return (
           setUser(res.data),
-          setError(undefined),
+          toast.dismiss(t.id),
           localStorage.setItem("loginUser", JSON.stringify(res.data))
         );
       })
       .catch((res) => {
         return (
-          setError(res.response?.data?.message),
+          toast.dismiss(t.id),
           toast.error(res.response?.data?.message),
           setUser(undefined)
         );
@@ -67,7 +66,7 @@ const LoginForm = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
-              type="password"
+              // type="password"
               placeholder="password"
               required
               value={password}

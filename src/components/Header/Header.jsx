@@ -19,7 +19,7 @@ const Header = () => {
   } = CartState();
 
   useEffect(() => {
-    setUser(localStorage.getItem("loginUser"));
+    setUser(JSON.parse(localStorage.getItem("loginUser")));
   }, []);
 
   const incrementCount = (id, qty) => {

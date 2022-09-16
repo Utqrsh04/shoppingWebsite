@@ -41,7 +41,7 @@ function App() {
   };
 
   useEffect(() => {
-    setUser(localStorage.getItem("loginUser"));
+    setUser(JSON.parse(localStorage.getItem("loginUser")));
     fetchNewProducts();
     setLoading(true);
     setTimeout(() => {

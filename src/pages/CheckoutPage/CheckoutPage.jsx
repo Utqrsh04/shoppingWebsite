@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import "./CheckoutPage.scss";
 import { getOnlyProductId } from "../../utils/getOnlyProductId";
@@ -6,6 +6,7 @@ import { CartState } from "../../context/context";
 import { IoMdClose } from "react-icons/io";
 import { calculateTotalPrice } from "../../utils/calculateTotalPrice";
 import axios from "axios";
+import { UserContext } from "../../App";
 
 function loadScript(src) {
   return new Promise((resolve) => {
@@ -28,13 +29,48 @@ const CheckoutPage = () => {
     dispatch,
   } = CartState();
 
-  // const [price, setPrice] = useState();
-
+  const user = useContext(UserContext);
   const price = calculateTotalPrice(cart);
   const products = getOnlyProductId(cart);
-  async function displayRazorpay() {
+
+  const [email, setEmail] = useState(user && user.email);
+  const [shippingData, setShippingData] = useState({
+    street: "",
+    apartment: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    phone_number: "",
+  });
+
+  console.log(user);
+  const handleChange = (e) => {
+    const newData = { ...shippingData };
+    newData[e.target.id] = e.target.value;
+    setShippingData(newData);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log("Clicked");
 
+    if (
+      !email ||
+      !shippingData.street ||
+      !shippingData.city ||
+      !shippingData.state ||
+      !shippingData.postal_code ||
+      !shippingData.phone_number
+    ) {
+      toast.error("Please provide all the necessary details");
+      return;
+    }
+    displayRazorpay();
+  };
+
+  async function displayRazorpay() {
+    console.log("razorpay");
+    toast.error("Not accepting orders now");
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -43,12 +79,6 @@ const CheckoutPage = () => {
       alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
-
-    // var raw = JSON.stringify({
-    //   products: products,
-    //   price: price,
-    // });
-
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -57,8 +87,8 @@ const CheckoutPage = () => {
     };
 
     const data = await axios.post(
-      "http://localhost:5000/api/order/create",
-      { products, price },
+      "https://ecommerce04.herokuapp.com/api/order/create",
+      { products, price, email, shippingData },
       requestOptions
     );
 
@@ -104,11 +134,10 @@ const CheckoutPage = () => {
     });
   };
 
-  // let cartQuantity = 0;
-  // for (let i = 0; i < cart.length; i++) {
-  //   cartQuantity += cart[i].qty;
-  // }
-
+  let cartQuantity = 0;
+  for (let i = 0; i < cart.length; i++) {
+    cartQuantity += cart[i].qty;
+  }
   return (
     <>
       <Toaster />
@@ -118,36 +147,68 @@ const CheckoutPage = () => {
             <div className="checkout-email-wrapper">
               <div className="checkout-input-feilds-container">
                 <h3>Email</h3>
-                <input type="email" placeholder="Email" required value="" />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
                 <br />
                 <br />
                 <h3>Shipping Address</h3>
                 <input
+                  id="street"
                   type="text"
                   placeholder="Street Address"
                   required
-                  value=""
+                  value={shippingData.street}
+                  onChange={(e) => handleChange(e)}
                 />
-                <input type="text" placeholder="Apartment" value="" />
-                <input type="text" placeholder="City" required value="" />
-                <input type="text" placeholder="State" required value="" />
                 <input
+                  id="apartment"
+                  type="text"
+                  placeholder="Apartment"
+                  value={shippingData.apartment}
+                  onChange={(e) => handleChange(e)}
+                />
+                <input
+                  id="city"
+                  type="text"
+                  placeholder="City"
+                  required
+                  value={shippingData.city}
+                  onChange={(e) => handleChange(e)}
+                />
+                <input
+                  id="state"
+                  type="text"
+                  placeholder="State"
+                  required
+                  value={shippingData.state}
+                  onChange={(e) => handleChange(e)}
+                />
+                <input
+                  id="postal_code"
                   type="text"
                   placeholder="Postal Code"
                   required
-                  value=""
+                  value={shippingData.postal_code}
+                  onChange={(e) => handleChange(e)}
                 />
                 <input
+                  id="phone_number"
                   type="text"
                   placeholder="Phone number"
                   required
-                  value=""
+                  value={shippingData.phone_number}
+                  onChange={(e) => handleChange(e)}
                 />
               </div>
             </div>
             <button
               type="submit"
-              onClick={displayRazorpay}
+              onClick={(e) => handleSubmit(e)}
               className="make-payment-btn"
             >
               Make Payment
@@ -217,7 +278,7 @@ const CheckoutPage = () => {
 
               <div className="line-break"></div>
               <li>
-                <span>Total : </span>
+                <span>Total ({cartQuantity} items): </span>
                 <span>{price + 49}</span>
               </li>
             </ul>
