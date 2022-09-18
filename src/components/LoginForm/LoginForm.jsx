@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./LoginForm.scss";
 
 const LoginForm = () => {
@@ -32,7 +32,6 @@ const LoginForm = () => {
         );
       });
   }
-  const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -41,12 +40,13 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
+    toast.remove();
     setUser(JSON.parse(localStorage.getItem("loginUser")));
   }, []);
 
   if (user) {
     console.log("we have logged in user ");
-    navigate("/");
+    window.location.href = "/";
   }
 
   return (

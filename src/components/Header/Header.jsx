@@ -19,7 +19,8 @@ const Header = () => {
   } = CartState();
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("loginUser")));
+    const data = localStorage.getItem("loginUser");
+    if (data != null) setUser(JSON.parse(data));
   }, []);
 
   const incrementCount = (id, qty) => {
@@ -51,6 +52,7 @@ const Header = () => {
     localStorage.removeItem("loginUser");
     setUser(undefined);
     toast.success("Logout Successfull");
+    window.location.href = "/";
   };
 
   return (
@@ -88,7 +90,7 @@ const Header = () => {
               {/* <span className="header_icons">
                 <FaSearch />
               </span> */}
-              <Link to={user ? "/profile" : "/login"} className="header_icons">
+              <Link to={"/profile"} className="header_icons">
                 <FaUserAlt />
               </Link>
               <span className="header_icons cart_icon" onClick={ToggleSidebar}>

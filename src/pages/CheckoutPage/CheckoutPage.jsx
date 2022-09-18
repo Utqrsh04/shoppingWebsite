@@ -1,12 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import "./CheckoutPage.scss";
-import { getOnlyProductId } from "../../utils/getOnlyProductId";
 import { CartState } from "../../context/context";
 import { IoMdClose } from "react-icons/io";
 import { calculateTotalPrice } from "../../utils/calculateTotalPrice";
 import axios from "axios";
 import { UserContext } from "../../App";
+import Footer from "../../components/Footer/Footer";
+import { Link } from "react-router-dom";
 
 function loadScript(src) {
   return new Promise((resolve) => {
@@ -31,10 +32,11 @@ const CheckoutPage = () => {
 
   const user = useContext(UserContext);
   const price = calculateTotalPrice(cart);
-  const products = getOnlyProductId(cart);
+  const products = cart;
 
-  const [email, setEmail] = useState(user && user.email);
+  const [email, setEmail] = useState(user ? user.email : "");
   const [shippingData, setShippingData] = useState({
+    user: "",
     street: "",
     apartment: "",
     city: "",
@@ -43,7 +45,6 @@ const CheckoutPage = () => {
     phone_number: "",
   });
 
-  console.log(user);
   const handleChange = (e) => {
     const newData = { ...shippingData };
     newData[e.target.id] = e.target.value;
@@ -52,7 +53,21 @@ const CheckoutPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Clicked");
+    console.log("Clicked", products);
+
+    if (user === null) {
+      toast(
+        <span className="toast-login">
+          Please Login to make payment .
+          <br />
+          <Link className="login-link" to="/login">
+            Click here to Login.
+          </Link>
+        </span>
+      );
+      return;
+    }
+    shippingData.user = user;
 
     if (
       !email ||
@@ -65,12 +80,19 @@ const CheckoutPage = () => {
       toast.error("Please provide all the necessary details");
       return;
     }
+    // toast.loading("Creating your Order...");
     displayRazorpay();
   };
 
+  useEffect(() => {
+    const data = localStorage.getItem("shippingData");
+    if (data !== null) setShippingData(JSON.parse(data));
+  }, []);
+
   async function displayRazorpay() {
     console.log("razorpay");
-    toast.error("Not accepting orders now");
+    // toast.error("Not accepting orders now");
+
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -79,17 +101,18 @@ const CheckoutPage = () => {
       alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    if (user === undefined || user === null) return;
 
-    var requestOptions = {
-      headers: myHeaders,
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
     };
-
     const data = await axios.post(
       "https://ecommerce04.herokuapp.com/api/order/create",
       { products, price, email, shippingData },
-      requestOptions
+      config
     );
 
     console.log("payment data", data);
@@ -202,6 +225,7 @@ const CheckoutPage = () => {
                   placeholder="Phone number"
                   required
                   value={shippingData.phone_number}
+                  maxLength={12}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
@@ -285,6 +309,7 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
