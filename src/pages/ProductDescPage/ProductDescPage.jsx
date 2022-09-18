@@ -37,8 +37,6 @@ const ProductDescPage = () => {
     });
   };
 
-  console.log("selected size", selectedSize);
-
   return (
     <>
       <div className="product_desc_page_wrapper">
