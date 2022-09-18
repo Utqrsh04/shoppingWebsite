@@ -12,8 +12,6 @@ const ProductDescPage = () => {
     dispatch,
   } = CartState();
 
-  console.log("Product Desc Page", cart);
-
   const fetchProduct = () => {
     let productID = window?.location?.pathname.split("/")[2];
     console.log("calling fetch each ", productID);
@@ -22,15 +20,25 @@ const ProductDescPage = () => {
       .then((res) => setProductData(res.data));
   };
 
-  // console.log(productData);A
+  // console.log(productData);
 
   useEffect(() => {
     fetchProduct();
   }, []);
 
-  const handleSizeClick = (e) => {
+  const handleSizeClick = (e, id) => {
     setSelectedSize(e.target.id);
+    dispatch({
+      type: "CHANGE_SIZE",
+      payload: {
+        _id: id,
+        selectedSize: e.target.id,
+      },
+    });
   };
+
+  console.log("selected size", selectedSize);
+
   return (
     <>
       <div className="product_desc_page_wrapper">
@@ -70,7 +78,7 @@ const ProductDescPage = () => {
                         className={
                           selectedSize === each ? " selected_size " : " "
                         }
-                        onClick={(e) => handleSizeClick(e)}
+                        onClick={(e) => handleSizeClick(e, productData._id)}
                         key={each}
                       >
                         {each}
@@ -93,12 +101,21 @@ const ProductDescPage = () => {
               ) : (
                 <button
                   className="add_to_cart custom-btn"
-                  onClick={() =>
-                    dispatch({
-                      type: "ADD_TO_CART",
-                      payload: productData,
-                    })
-                  }
+                  onClick={() => {
+                    return (
+                      dispatch({
+                        type: "ADD_TO_CART",
+                        payload: productData,
+                      }),
+                      dispatch({
+                        type: "CHANGE_SIZE",
+                        payload: {
+                          _id: productData._id,
+                          selectedSize: selectedSize,
+                        },
+                      })
+                    );
+                  }}
                 >
                   Add to bag
                 </button>

@@ -33,6 +33,19 @@ export const cartReducer = (state, action) => {
       return newState;
     }
 
+    case "CHANGE_SIZE": {
+      const newState = {
+        ...state,
+        cart: state.cart.filter((c) =>
+          c._id === action.payload._id
+            ? (c.selectedSize = action.payload.selectedSize)
+            : c.selectedSize
+        ),
+      };
+      updateCartInStorage(newState.cart);
+      return newState;
+    }
+
     case "FETCHED_PRODUCTS": {
       const newArrivals = action.payload.filter(
         (product) => product.new_arrivals === true
