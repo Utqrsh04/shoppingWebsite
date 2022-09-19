@@ -13,6 +13,7 @@ import Profile from "./pages/ProfilePage/Profile";
 import axios from "axios";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import { CartState } from "./context/context";
+import NotFound from "./pages/NotFoundPage/NotFound";
 
 export const UserContext = React.createContext();
 export const ProductContext = React.createContext();
@@ -29,24 +30,27 @@ function App() {
 
   const fetchNewProducts = () => {
     axios
-      .get("https://ecommerce04.herokuapp.com/api/product", {
+      .get("http://localhost:5000/api/product", {
         mode: "cors",
       })
-      .then((res) =>
-        dispatch({
-          type: "FETCHED_PRODUCTS",
-          payload: res.data,
-        })
-      );
+      .then((res) => {
+        return (
+          dispatch({
+            type: "FETCHED_PRODUCTS",
+            payload: res.data,
+          }),
+          setLoading(false)
+        );
+      });
   };
 
   useEffect(() => {
+    setLoading(true);
     setUser(JSON.parse(localStorage.getItem("loginUser")));
     fetchNewProducts();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,6 +65,7 @@ function App() {
               <>
                 <Header />
                 <Routes>
+                  <Route path="*" element={<NotFound />} />
                   <Route path="/signup" element={<SignupForm />}></Route>
                   <Route path="/login" element={<LoginForm />}></Route>
                   <Route path="/" element={<LandingPage />}></Route>
