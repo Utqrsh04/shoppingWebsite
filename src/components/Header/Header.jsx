@@ -24,6 +24,10 @@ const Header = () => {
   }, []);
 
   const incrementCount = (id, qty) => {
+    if (qty + 1 > 3) {
+      toast.error("Max quantity can be 3 only");
+      return;
+    }
     dispatch({
       type: "CHANGE_CART_QTY",
       payload: {
@@ -95,7 +99,7 @@ const Header = () => {
               </Link>
               <span className="header_icons cart_icon" onClick={ToggleSidebar}>
                 <FaShoppingCart />
-                <span>{cart && cartQuantity}</span>
+                <span>{cart && cartQuantity > 0 && cartQuantity}</span>
               </span>
 
               {user && (
@@ -140,7 +144,9 @@ const Header = () => {
                       <div className="order_tile">
                         <img src={e.cover_image} alt="" />
                         <div className="sidebar-product_desc">
-                          <h4>{e.product_name}</h4>
+                          <h4>
+                            {e.product_name} ({e.selectedSize})
+                          </h4>
                           <h6>Rs.{e.price}</h6>
                         </div>
                       </div>
