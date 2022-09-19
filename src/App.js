@@ -30,7 +30,7 @@ function App() {
 
   const fetchNewProducts = () => {
     axios
-      .get("http://localhost:5000/api/product", {
+      .get("https://ecommerce04.herokuapp.com/api/product", {
         mode: "cors",
       })
       .then((res) => {

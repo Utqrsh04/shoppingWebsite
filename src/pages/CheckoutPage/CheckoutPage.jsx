@@ -90,7 +90,8 @@ const CheckoutPage = () => {
 
   async function displayRazorpay() {
     console.log("razorpay");
-    // toast.error("Not accepting orders now");
+    toast.error("Not accepting orders now");
+    return;
 
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
@@ -108,19 +109,19 @@ const CheckoutPage = () => {
         Authorization: `Bearer ${user.token}`,
       },
     };
-    toast.loading("Creating your Order...");
+    const tid = toast.loading("Creating your Order...");
 
     const data = await axios.post(
-      "http://localhost:5000/api/order/create",
+      "https://ecommerce04.herokuapp.com/api/order/create",
       { products, price, email, shippingData },
       config
     );
 
     // console.log("payment data", data);
     data && data?.message && toast.error(data.message);
-    toast.remove();
+    toast.dismiss(tid);
     const options = {
-      key: "rzp_live_ZezO3QjV4eUAf3",
+      key: process.env.REACT_APP_RAZOR_KEY,
       currency: data.data.currency,
       amount: data.data.amount.toString(),
       order_id: data.data.id,
@@ -128,6 +129,7 @@ const CheckoutPage = () => {
       description: "Thank you for nothing. Please give us some money",
       image: "LOGO",
       handler: function (response) {
+        toast.dismiss(tid);
         toast.success("Payment was Successfull");
         // toast(response.razorpay_payment_id);
         // toast(response.razorpay_order_id);
