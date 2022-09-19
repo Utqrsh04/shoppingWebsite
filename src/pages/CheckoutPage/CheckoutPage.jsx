@@ -53,7 +53,7 @@ const CheckoutPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Clicked", products);
+    // console.log("Clicked", products);
 
     if (user === null) {
       toast(
@@ -80,7 +80,6 @@ const CheckoutPage = () => {
       toast.error("Please provide all the necessary details");
       return;
     }
-    // toast.loading("Creating your Order...");
     displayRazorpay();
   };
 
@@ -98,7 +97,7 @@ const CheckoutPage = () => {
     );
 
     if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
+      toast.error("Are you online?");
       return;
     }
     if (user === undefined || user === null) return;
@@ -109,15 +108,17 @@ const CheckoutPage = () => {
         Authorization: `Bearer ${user.token}`,
       },
     };
+    toast.loading("Creating your Order...");
+
     const data = await axios.post(
-      "https://ecommerce04.herokuapp.com/api/order/create",
+      "http://localhost:5000/api/order/create",
       { products, price, email, shippingData },
       config
     );
 
-    console.log("payment data", data);
+    // console.log("payment data", data);
     data && data?.message && toast.error(data.message);
-
+    toast.remove();
     const options = {
       key: "rzp_live_ZezO3QjV4eUAf3",
       currency: data.data.currency,
@@ -127,10 +128,10 @@ const CheckoutPage = () => {
       description: "Thank you for nothing. Please give us some money",
       image: "LOGO",
       handler: function (response) {
-        toast.success("Payment Successfull");
-        toast(response.razorpay_payment_id);
-        toast(response.razorpay_order_id);
-        toast(response.razorpay_signature);
+        toast.success("Payment was Successfull");
+        // toast(response.razorpay_payment_id);
+        // toast(response.razorpay_order_id);
+        // toast(response.razorpay_signature);
       },
     };
     const paymentObject = new window.Razorpay(options);

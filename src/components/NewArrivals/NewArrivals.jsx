@@ -6,7 +6,7 @@ import "./NewArrivals.scss";
 
 const NewArrivals = () => {
   const data = useContext(ProductContext);
-  console.log("context data ", data);
+  // console.log("context data ", data);
 
   return (
     <div className="below_hero_section">
