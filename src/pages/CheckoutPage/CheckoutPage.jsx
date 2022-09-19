@@ -119,7 +119,7 @@ const CheckoutPage = () => {
     data && data?.message && toast.error(data.message);
 
     const options = {
-      key: "rzp_test_qGx6ZOHwjb87fm",
+      key: "rzp_live_ZezO3QjV4eUAf3",
       currency: data.data.currency,
       amount: data.data.amount.toString(),
       order_id: data.data.id,
@@ -138,6 +138,10 @@ const CheckoutPage = () => {
   }
 
   const incrementCount = (id, qty) => {
+    if (qty + 1 > 3) {
+      toast.error("Max quantity can be 3 only");
+      return;
+    }
     dispatch({
       type: "CHANGE_CART_QTY",
       payload: {
@@ -240,72 +244,89 @@ const CheckoutPage = () => {
           </form>
         </div>
         <div className="cart-wrapper">
-          <div className="sd-body">
-            <ul>
-              {cart &&
-                cart.map((e) => (
-                  <li key={e._id}>
-                    <div className="sd-link">
-                      <div className="order_tile">
-                        <img src={e.cover_image} alt="" />
-                        <div className="sidebar-product_desc">
-                          <h5>{e.product_name}</h5>
-                          <h6>Rs.{e.price}</h6>
-                        </div>
-                      </div>
-                      <div className="sidebar_count_btns">
-                        <button
-                          disabled={e.qty === 1}
-                          onClick={() => decrementCount(e._id, e.qty)}
-                        >
-                          -
-                        </button>
-                        {e.qty}
-                        <button onClick={() => incrementCount(e._id, e.qty)}>
-                          +
-                        </button>
-                      </div>
-                      <div
-                        className="remove-product-div"
-                        onClick={() =>
-                          dispatch({
-                            type: "REMOVE_FROM_CART",
-                            payload: e,
-                          })
-                        }
-                      >
-                        <IoMdClose className="remove-product-icon" />
-                      </div>
-                    </div>
-                    {/* <div className="close-icon-div">
+          <div>
+            {cart.length > 0 ? (
+              <>
+                <div className="sd-body">
+                  <ul>
+                    {cart &&
+                      cart.map((e) => (
+                        <li key={e._id}>
+                          <div className="sd-link">
+                            <div className="order_tile">
+                              <img src={e.cover_image} alt="" />
+                              <div className="sidebar-product_desc">
+                                <h5>
+                                  {e.product_name} ({e.selectedSize})
+                                </h5>
+                                <h6>Rs.{e.price}</h6>
+                              </div>
+                            </div>
+                            <div className="sidebar_count_btns">
+                              <button
+                                disabled={e.qty === 1}
+                                onClick={() => decrementCount(e._id, e.qty)}
+                              >
+                                -
+                              </button>
+                              {e.qty}
+                              <button
+                                onClick={() => incrementCount(e._id, e.qty)}
+                              >
+                                +
+                              </button>
+                            </div>
+                            <div
+                              className="remove-product-div"
+                              onClick={() =>
+                                dispatch({
+                                  type: "REMOVE_FROM_CART",
+                                  payload: e,
+                                })
+                              }
+                            >
+                              <IoMdClose className="remove-product-icon" />
+                            </div>
+                          </div>
+                          {/* <div className="close-icon-div">
                       <IoMdClose className="close-icon" />
                     </div> */}
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <div className="total-cost-delivery ">
-            <ul>
-              <li>
-                <span>Order Value : </span>
-                <span>{price}</span>
-              </li>
-              <li>
-                <span>Tax :</span>
-                <span>00</span>
-              </li>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+                <div className="total-cost-delivery ">
+                  <ul>
+                    <li>
+                      <span>Order Value : </span>
+                      <span>{price}</span>
+                    </li>
+                    <li>
+                      <span>Tax :</span>
+                      <span>00</span>
+                    </li>
 
-              <li>
-                <span>Delivery Charges : </span>
-                <span>49</span>
-              </li>
+                    <li>
+                      <span>Delivery Charges : </span>
+                      <span>49</span>
+                    </li>
 
-              <div className="line-break"></div>
-              <li>
-                <span>Total ({cartQuantity} items): </span>
-                <span>{price + 49}</span>
-              </li>
-            </ul>
+                    <div className="line-break"></div>
+                    <li>
+                      <span>Total ({cartQuantity} items): </span>
+                      <span>{price + 49}</span>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <p>
+                {" "}
+                No items in cart <br /> <Link to={"/products"}>
+                  Shop more{" "}
+                </Link>{" "}
+              </p>
+            )}
           </div>
         </div>
       </div>
