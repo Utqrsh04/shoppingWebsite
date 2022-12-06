@@ -16,7 +16,9 @@ const ProductDescPage = () => {
     let productID = window?.location?.pathname.split("/")[2];
     console.log("calling fetch each ", productID);
     axios
-      .get(`https://ecommerce04.herokuapp.com/api/product/${productID}`)
+      .get(
+        `https://shoppingwebsitebackend.onrender.com/api/product/${productID}`
+      )
       .then((res) => setProductData(res.data));
   };
 

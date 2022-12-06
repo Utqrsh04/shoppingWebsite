@@ -13,7 +13,7 @@ const SignupForm = () => {
   function signupUser() {
     const t = toast.loading("Registering...");
     axios
-      .post("https://ecommerce04.herokuapp.com/api/users/signup", {
+      .post("https://shoppingwebsitebackend.onrender.com/api/users/signup", {
         name,
         email,
         password,

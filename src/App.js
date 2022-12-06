@@ -30,7 +30,7 @@ function App() {
 
   const fetchNewProducts = () => {
     axios
-      .get("https://ecommerce04.herokuapp.com/api/product", {
+      .get("https://shoppingwebsitebackend.onrender.com/api/product", {
         mode: "cors",
       })
       .then((res) => {
@@ -48,9 +48,9 @@ function App() {
     setLoading(true);
     setUser(JSON.parse(localStorage.getItem("loginUser")));
     fetchNewProducts();
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 2000);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

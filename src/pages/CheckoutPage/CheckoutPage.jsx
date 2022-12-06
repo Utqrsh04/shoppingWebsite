@@ -90,8 +90,8 @@ const CheckoutPage = () => {
 
   async function displayRazorpay() {
     console.log("razorpay");
-    toast.error("Not accepting orders now");
-    return;
+    // toast.error("Not accepting orders now");
+    // return;
 
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
@@ -112,7 +112,7 @@ const CheckoutPage = () => {
     const tid = toast.loading("Creating your Order...");
 
     const data = await axios.post(
-      "https://ecommerce04.herokuapp.com/api/order/create",
+      "https://shoppingwebsitebackend.onrender.com/api/order/create",
       { products, price, email, shippingData },
       config
     );

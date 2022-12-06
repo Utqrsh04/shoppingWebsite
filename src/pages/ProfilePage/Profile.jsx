@@ -13,6 +13,8 @@ const Profile = () => {
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
   const [password, setPassword] = useState();
+  const [orderData, setOrderData] = useState([]);
+  const [orderStatus, setOrderStatus] = useState("cancelled");
 
   const [shippingAddress, setShippingAddress] = useState({
     user: user ? user._id : "",
@@ -41,7 +43,7 @@ const Profile = () => {
     };
     axios
       .post(
-        "https://ecommerce04.herokuapp.com/api/users/profile",
+        "https://shoppingwebsitebackend.onrender.com/api/users/profile",
         {
           name,
           email,
@@ -71,7 +73,7 @@ const Profile = () => {
     };
     axios
       .post(
-        "https://ecommerce04.herokuapp.com/api/shippingAddress/update",
+        "https://shoppingwebsitebackend.onrender.com/api/shippingAddress/update",
         shippingAddress,
         config
       )
@@ -96,7 +98,10 @@ const Profile = () => {
       },
     };
     axios
-      .get("https://ecommerce04.herokuapp.com/api/shippingAddress/", config)
+      .get(
+        "https://shoppingwebsitebackend.onrender.com/api/shippingAddress/",
+        config
+      )
       .then((res) => {
         return (
           localStorage.setItem("shippingData", JSON.stringify(res.data)),
@@ -105,8 +110,31 @@ const Profile = () => {
       });
   };
 
+  const fetchOrders = () => {
+    if (user === undefined || user === null) return;
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    // orderType :"pending" "cancelled" "processed" "delivered"
+    axios
+      .get(
+        `https://shoppingwebsitebackend.onrender.com/api/order?status=${orderStatus}`,
+        config
+      )
+      .then((res) => {
+        return setOrderData(res.data);
+      });
+  };
+
+  console.log("ORDER DATA", orderData);
+
   useEffect(() => {
     fetchShippingAddress();
+    fetchOrders();
   }, []);
 
   return (
@@ -209,9 +237,10 @@ const Profile = () => {
 
             <div className="user-orders-wrapper">
               <h1> Orders</h1>
-
-              <div>Orders will go here</div>
-              <OrderCard />
+              {orderData &&
+                orderData.map((data, key) => (
+                  <OrderCard order={data} idx={key} />
+                ))}
             </div>
           </div>
         </div>
